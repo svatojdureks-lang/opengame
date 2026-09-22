@@ -1,9 +1,15 @@
 import argparse
 import logging
-import reference
 
+from bs4 import BeautifulSoup
+
+import reference
+from client import StopGameClient
 
 from logging_config import BASIC_CONFIG
+import difflib
+from reference import save_tags, save_platforms
+import bs4
 
 logger = logging.getLogger(__name__)
 
@@ -45,34 +51,66 @@ def build_parser() -> argparse.ArgumentParser:
 
 def cmd_update(args):
     logger.info(f"Команда update {args}")
+    client = StopGameClient()
+    save_tags(client.fetch_tags())
+    save_platforms(client.fetch_platforms())
 
 
 def cmd_genres(args):
-    logger.info(f"Команда genres {args}")
+    logger.info(f"Выполняем поиск доступных тегов")
+    tags22 = reference.load_tags()
+    for tag in tags22:
+        print(tag.name)
 
 
 def cmd_platforms(args):
-    logger.info(f"Команда platforms {args}")
+    logger.info(f"Выполняем поиск доступных платформ")
+    platforms22 = reference.load_platforms()
+    for platform in platforms22:
+        print(platform.code)
 
 
 def cmd_games(args):
-    logger.info(f"Команда games {args}")
-
     platforms = reference.load_platforms()
-    platform_codes = []
-    for user_input in args.platforms:
+    platforms_codes = []
+    platform_possibilities = [p.code for p in platforms] + [p.title for p in platforms]
+    error = ""
+    yes = ""
+    for word in args.platforms:
         for platform in platforms:
-            if platform.matches(user_input):
-                platform_codes.append(platform.code)
+            if platform.matches(word):
+                platforms_codes.append(platform.code)
+                break
+        else:
+            print(f"Не найдена платформа {word}")
+            matches = difflib.get_close_matches(word, platforms_codes, cutoff=0.6)
+            if matches:
+                print(f"Возможно вы имели в виду {matches[0]}")
 
     tags = reference.load_tags()
     tag_slugs = []
-    for user_input in args.genres:
+    tag_possibilities = [t.slug for t in tags] + [t.name for t in tags]
+    errort = ""
+    yest = ""
+    have_input_error = True
+    for word1 in args.genres:
         for tag in tags:
-            if tag.matches(user_input):
+            if tag.matches(word1):
                 tag_slugs.append(tag.slug)
+                break
+        else:
+            print(f"Не найден тег: <<{word1}>>")
+            matches1 = difflib.get_close_matches(word1, tag_possibilities, cutoff=0.6)
+            if matches1:
+                print(f"Возможно вы имели в виду <<{matches1[0]}>>")
+        logger.debug(f" {platforms_codes=} {tag_slugs=}")
 
-    print(f"{platform_codes=}, {tag_slugs=}")
+        client = StopGameClient()
+        page = client.fetch_catalog_page(tag_slugs=tag_slugs, platform_codes=platforms_codes)
+        soup = BeautifulSoup(page, "html.parser")
+        links = soup.find_all("a")
+        print(links)
+        games = soup.find_all("div", class_="game")
 
 
 

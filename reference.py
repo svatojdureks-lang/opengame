@@ -1,3 +1,4 @@
+import difflib
 import os
 import logging
 import csv
@@ -59,10 +60,6 @@ def load_platforms() -> list[Platform]:
             )
     logger.debug(f"Прочитано {len(platforms)} платформ")
     return platforms
-
-# def find_tag(user_input: str, tags: list[Tag]) -> Tag:
-
-
 
 if __name__ == "__main__":
     from client import StopGameClient
