@@ -1,0 +1,221 @@
+/* Подключение современного шрифта */
+@import url('https://googleapis.com');
+
+/* Анимация плавного появления контента */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Базовые настройки стиля */
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: #000000; /* Абсолютно черный фон страницы */
+    color: #e2e8f0;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+}
+
+/* Логотип StopGame */
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffaa00;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(255, 170, 0, 0.4);
+    border-bottom: 1px dashed rgba(255, 170, 0, 0.2);
+    padding-bottom: 15px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Заголовок фильтров */
+h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffffff;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Черная матовая панель формы фильтров */
+form {
+    background: #0a0a0a; /* Глубокий черный цвет для блоков */
+    border: 1px solid #1a1a1a;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 50px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Стилизация текстовых контейнеров формы */
+form p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+form p label[for="search"] {
+    font-weight: bold;
+    color: #a0aec0;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+/* Инпуты и селекты */
+input[type="search"], 
+select {
+    background: #000000; /* Чистый черный внутри полей */
+    color: #ffffff;
+    border: 1px solid #262626;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="search"]:focus, 
+select:focus {
+    border-color: #ffaa00;
+    box-shadow: 0 0 10px rgba(255, 170, 0, 0.3);
+}
+
+/* Поле выбора жанров */
+fieldset {
+    border: 1px solid #262626;
+    border-radius: 8px;
+    padding: 20px;
+    background: #000000;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+legend {
+    color: #ffaa00;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 0 10px;
+}
+
+/* Чекбоксы и подписи */
+fieldset label {
+    margin-right: 25px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s;
+    user-select: none;
+}
+
+fieldset label:hover {
+    color: #ffaa00;
+}
+
+input[type="checkbox"] {
+    accent-color: #ffaa00;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+/* Кнопка поиска */
+input[type="submit"] {
+    font-family: 'Orbitron', sans-serif;
+    background: #ffaa00;
+    color: #000000;
+    border: none;
+    padding: 14px 40px;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+input[type="submit"]:hover {
+    background: #e09500;
+}
+
+input[type="submit"]:active {
+    transform: scale(0.97);
+}
+
+/* Таблица результатов */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px; /* Расстояние между строками */
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Шапка таблицы */
+.names td, .names th {
+    font-family: 'Orbitron', sans-serif;
+    color: #ffaa00;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+}
+
+/* Строки таблицы в виде строгих черных блоков */
+table tr:not(.names) {
+    background: #0a0a0a; /* Строгий черный фон вместо подсветки */
+    border: 1px solid #1a1a1a;
+}
+
+table td, table th {
+    padding: 16px 20px;
+    text-align: left;
+}
+
+/* Скругление углов для строк */
+table tr:not(.names) td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+table tr:not(.names) td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Отключение интерактивной подсветки при наведении на игры */
+table tr:not(.names):hover {
+    background: #0a0a0a; /* Фон остается неизменным */
+    transform: none; /* Убрано приподнимание строк */
+    animation: none; /* Убрана пульсация */
+}
+
+/* Текст ссылки (первая колонка) */
+table td:first-child {
+    color: #00ffcc; 
+    font-family: monospace;
+    font-size: 15px;
+}
+
+/* Выделение рейтинга зеленым цветом */
+table td:nth-child(3) {
+    color: #00ff66; /* Яркий неоновый зеленый */
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 255, 102, 0.4); /* Эффект свечения для цифр */
+}

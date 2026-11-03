@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="catalog.css"
+</head>
+<body>
+    <h1>StopGame</h1>
+    <h2>Фильтры</h2>
+    <form action="" method="get">
+        <p>
+            <label for="search">Название:</label>
+            <input type="search" placeholder="Например, witcher" id="search" name="search" size="30" required>
+            <select name="platform">
+                <option value="any">Любая</option>
+                <option value="pc">PC</option>
+                <option value="ps4">PS4</option>
+            </select>
+            <fieldset>
+                <legend>Жанры</legend>
+                <input id="rpg" type="checkbox" name="genre" value="RPG">
+                <label for="rpg">Рпг</label>
+                <input id="racing" type="checkbox" name="genre" value="racing">
+                <label for="racing">Гонки</label>
+                <input id="quest" type="checkbox" name="genre" value="quest">
+                <label for="quest">Квесты</label>
+            </fieldset>
+        </p>
+        <input type="submit" value="Найти">
+    </form>
+    <table>
+        <!-- tr - table row -->
+        <!-- td - table data -->
+        <!-- th - table header -->
+        <tr class="names">
+            <td>Ссылка</td>
+            <th>Название</th>
+            <td>Рейтинг</td>
+            <td>Год</td>
+        </tr>
+        <tr>
+            <td>/mario</td>
+            <td>Mario</td>
+            <td>8.7</td>
+            <td>1986</td>
+        </tr>
+        <tr>
+            <td>/minecraft</td>
+            <td>Minecraft</td>
+            <td>9.2</td>
+            <td>2011</td>
+        </tr>
+    </table>
+
+</body>
+</html>
