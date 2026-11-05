@@ -30,15 +30,14 @@ class StopGameClient:
         platforms = response.json().get("platforms")
         return platforms
 
-    def fetch_catalog_page(self, genre_slugs: list[str],
+    def fetch_catalog_page(self, tag_slugs: list[str],
                            platform_codes: list[str], page: int = 1) -> str:
         params = {
-            "genre[]": genre_slugs,
+            "genre[]": tag_slugs,
             "platform[]": platform_codes,
             "p": page,
         }
         html = self._get("/games/catalog", params).text
-        time.sleep(self.pause)
         return html
 
     def _get(self, url: str, params: dict | None = None):

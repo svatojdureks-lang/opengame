@@ -89,6 +89,8 @@ def cmd_games(args):
 
     tags = reference.load_tags()
     tag_slugs = []
+    game_links = []
+    all = []
     tag_possibilities = [t.slug for t in tags] + [t.name for t in tags]
     errort = ""
     yest = ""
@@ -103,17 +105,40 @@ def cmd_games(args):
             matches1 = difflib.get_close_matches(word1, tag_possibilities, cutoff=0.6)
             if matches1:
                 print(f"Возможно вы имели в виду <<{matches1[0]}>>")
-        logger.debug(f" {platforms_codes=} {tag_slugs=}")
+    logger.debug(f" {platforms_codes=} {tag_slugs=}")
 
-        client = StopGameClient()
-        page = client.fetch_catalog_page(tag_slugs=tag_slugs, platform_codes=platforms_codes)
-        soup = BeautifulSoup(page, "html.parser")
-        links = soup.find_all("a")
-        print(links)
-        games = soup.find_all("div", class_="game")
+    client = StopGameClient()
+    page = client.fetch_catalog_page(tag_slugs=tag_slugs, platform_codes=platforms_codes)
+    soup = BeautifulSoup(page, "html.parser")
+    divs = soup.find_all("div")
+    for div in divs:
+        if div.has_attr("data-key"):
+            a = div.find("a")
+            game_links.append(a.attrs["href"])
+           
+    for game_link in game_links:
+        platforms = []
+        list_tag = []
+        resp = client._get(game_link)
+        soup = BeautifulSoup(resp.text, "html.parser")
+        title = soup.find("h1", class_="_game-title_1bso0_702").text
+        tags_list = soup.find_all("a", class_="_tag_82nn8_724")
+        Dt = soup.find("dt", string="Платформы")
+        next_dd = Dt.find_next("dd")
+        links = next_dd.find_all("a")
+        for link in links:
+            platforms.append(link.text)
+        for tag in tags_list:
+            list_tag.append(tag.text)
+        year = soup.find("dd").text
+    {
+        "year": year,
+        "tags": list_tag,
+        "platforms": platforms,
+        "title": title
+    }
 
-
-
+    games = soup.find_all("div", class_="game")
 def main():
     commands = {
         "update": cmd_update,

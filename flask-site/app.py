@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index() -> list[dict]:
     games = []
     with open ("out/games.csv", "r", encoding="utf-8") as f:
-        reader = DictReader(f, )
+        reader = DictReader(f)
         for row in reader:
             games.append(row)
     return render_template("template.html")
